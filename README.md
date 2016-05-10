@@ -1,10 +1,10 @@
 # jobs-analyzer
 
-market.
+This small tool helps to get some information about specified job roles on US market.
 
-It goes through the most popular job sites in US and aggregates the number of ads for specified role. Currently the only available chart is "Top 10 US states for specific position".
+It goes through the most popular job sites in US and aggregates the number of ads for specified role. Currently the only available chart is "Top ten states for specific role".
 
-This may help you to figure out which US states to choose for your new job search.
+This may help you to figure out what states to focus on during your job search.
 
 ### Example
 ```
