@@ -109,6 +109,8 @@ func getData(role, regex, site string) map[string]int64 {
       url = fmt.Sprint("http://www.monster.com/jobs/search/?q=", replaceSpacesWithPlus(role), "&where=", v)
     case "cb":
       url = fmt.Sprint("http://www.careerbuilder.com/jobs-", replaceSpacesWithMinus(role), "-in-", strings.ToLower(v), "?keywords=", replaceSpacesWithPlus(role), "&location=", v)
+    case "linkedin":
+      url = fmt.Sprint("https://www.linkedin.com/jobs/search?keywords=", replaceSpacesWithPlus(role), "&location=", strings.ToLower(k), "&trk=jobs_jserp_search_button_execute&orig=JSERP&locationId=")
     }
     resp, err := http.Get(url)
     if err != nil {
@@ -165,8 +167,12 @@ func main() {
   cbRegex := "\\((\\d+) Jobs\\)"
   cb := getData(*role, cbRegex, "cb")
 
+  //linkedin
+  linkedinRegex := "<div class=\"results-context\"><strong>(\\d+)</strong> <h1><strong>.+</strong>.+<strong>.+</strong></h1></div>"
+  linkedin := getData(*role, linkedinRegex, "linkedin")
+
   //analytic functions
-  topTen := topTenAmongAllStates(dice, indeed, monster, cb)
+  topTen := topTenAmongAllStates(dice, indeed, monster, cb, linkedin)
 
   // debug
   // fmt.Println("Dice")
@@ -186,6 +192,11 @@ func main() {
   // fmt.Println("-------------------")
   // fmt.Println("CareerBuilder")
   // for k, v := range cb {
+  //   fmt.Println(k, " — ", v)
+  // }
+  // fmt.Println("-------------------")
+  // fmt.Println("LinkedIn")
+  // for k, v := range linkedin {
   //   fmt.Println(k, " — ", v)
   // }
 
